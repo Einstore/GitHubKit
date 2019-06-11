@@ -2,9 +2,9 @@
 
 Super simple to use Github API client library written for Vapor 4
 
-### Usage
+## Usage
 
-#### 1) Configure a service
+#### Configure a service
 ```swift
 s.register(Github.self) { container in
     let config = Github.Config(
@@ -16,7 +16,7 @@ s.register(Github.self) { container in
 }
 ```
 
-#### 2) In a route 
+#### Make a route?
 
 ```swift
 import GithubAPI
@@ -28,17 +28,17 @@ r.get("github", "organizations") { req -> EventLoopFuture<[Organization]> in
 }
 ```
 
-### Development
+## Development
 
 Adding a new API call is ... surprisingly super simple too
 
 Lets say you need to add a detail of a user
 
-#### 1) Go to the documentation
+#### Go to the documentation
 
 https://developer.github.com/v3/users/
 
-#### 2) Autogenerate a model
+#### Autogenerate a model
 
 Copy the example JSON, for example:
 
@@ -84,7 +84,7 @@ Oh yeah ... and call the main class `User`! :) ...
 
 Import `Vapor` and conform the main model to `Content` instead of `Codable`.
 
-#### 3) Make a request extension
+#### Make a request extension
 
 First you need to conform the `User` model to `Queryable`. This will enable the `User.query(on: container)` method.
 
@@ -105,7 +105,7 @@ extension QueryableProperty where QueryableType == User {
 }
 ```
 
-#### 4) All done
+#### All done
 
 You should be able to call `try User.query(on: c).get()` and get an `EventLoopFuture<User>` with the details of your authenticated user.
 
