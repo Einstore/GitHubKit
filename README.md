@@ -4,6 +4,24 @@ Super simple to use Github API client library written for Vapor 4
 
 ## Usage
 
+#### Add to your Package.swift file
+
+```swift
+.package(url: "https://github.com/Einstore/GithubAPI.git", from: "1.0.0")
+```
+
+Don't forget about your target
+
+```swift
+.target(
+    name: "App",
+    dependencies: [
+        "Vapor",
+        "GithubAPI"
+    ]
+)
+```
+
 #### Configure a service
 ```swift
 s.register(Github.self) { container in
