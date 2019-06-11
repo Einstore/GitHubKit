@@ -111,7 +111,8 @@ You should be able to call `try User.query(on: c).get()` and get an `EventLoopFu
 
 ### Author
 
-Ondrej Rafaj @rafiki270
+**Ondrej Rafaj** @rafiki270
+(It wasn't my token after all, was it?!)
 
 ### License
 
