@@ -9,7 +9,7 @@ Super simple to use Github API client library written for Vapor 4
 s.register(Github.self) { container in
     let config = Github.Config(
         username: "rafiki270",
-        token: "6ae2csf8a9190be8fdgfa864aaeaa3bgff1bga",
+        token: "6ae2csf8a9190be8fdgfa864aaeaa3bgff1bga", // This is my real token! please do not use!!!
         server: "https://github.example.com/api/v3/" // For enterprise github servers (optional)
     )
     return try Github(config, on: container)
