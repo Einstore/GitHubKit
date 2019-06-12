@@ -75,28 +75,50 @@ public class Github {
 
 extension Github {
     
-    /// Retrieve data from Github API and turn them into a model
-    func get<C>(path: String) throws -> EventLoopFuture<C> where C: Decodable {
-        let uri = URI(string: config.url(for: path))
-
+    var headers: HTTPHeaders {
         let loginString = "\(config.username):\(config.token)"
         let loginData = loginString.data(using: String.Encoding.utf8)!
         let base64LoginString = loginData.base64EncodedString()
-
+        
         let headers: HTTPHeaders = [
             "Authorization": "Basic \(base64LoginString)"
         ]
-
+        return headers
+    }
+    
+    /// Retrieve data from Github API and turn them into a model
+    func get<C>(path: String) throws -> EventLoopFuture<C> where C: Decodable {
+        let uri = URI(string: config.url(for: path))
+        
         let clientRequest = ClientRequest(
             method: .GET,
             url: uri,
             headers: headers,
             body: nil
         )
-
+        
+        return client.send(clientRequest).flatMap() { response in
+            do {
+                let data = try response.content.decode(C.self)
+                return self.container.eventLoop.makeSucceededFuture(data)
+            } catch {
+                return self.container.eventLoop.makeFailedFuture(error)
+            }
+        }
+    }
+    
+    func get(file url: String) throws -> EventLoopFuture<Data?> {
+        let uri = URI(string: url)
+        
+        let clientRequest = ClientRequest(
+            method: .GET,
+            url: uri,
+            headers: headers,
+            body: nil
+        )
+        
         return client.send(clientRequest).map() { response in
-            let data = try! response.content.decode(C.self)
-            return data
+            return response.body?.getData(at: 0, length: (response.body?.capacity ?? 0))
         }
     }
     

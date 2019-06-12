@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Repo.swift
 //  
 //
 //  Created by Ondrej Rafaj on 10/06/2019.
@@ -72,11 +72,11 @@ public struct Repo: Content {
     public let nodeID: String?
     public let name: String
     public let fullName: String
-    public let repoPrivate: Bool?
-    public let owner: Owner?
-    public let htmlURL: String?
+    public let repoPrivate: Bool
+    public let owner: Owner
+    public let htmlURL: String
     public let repoDescription: String?
-    public let fork: Bool?
+    public let fork: Bool
     public let url: String?
     public let forksURL: String?
     public let keysURL: String?
