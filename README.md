@@ -2,6 +2,15 @@
 
 Super simple to use Github API client library written for Vapor 4
 
+## Functionality
+
+The below probably don't contain all methods from the spec but it's a good start ...
+
+- [x] Organizations
+- [x] Repos
+- [x] Files
+- [x] File contents
+
 ## Usage
 
 #### Add to your Package.swift file
