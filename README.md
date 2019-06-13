@@ -1,4 +1,4 @@
-# GithubConnector
+# GitHubKit
 
 Super simple to use Github API client library written for Vapor 4
 
@@ -16,7 +16,7 @@ The below probably don't contain all methods from the spec but it's a good start
 #### Add to your Package.swift file
 
 ```swift
-.package(url: "https://github.com/Einstore/GithubConnector.git", from: "1.0.0")
+.package(url: "https://github.com/Einstore/GitHubKit.git", from: "1.0.0")
 ```
 
 Don't forget about your target
@@ -26,7 +26,7 @@ Don't forget about your target
     name: "App",
     x: [
         "Vapor",
-        "GithubConnector"
+        "GitHubKit"
     ]
 )
 ```
@@ -46,7 +46,7 @@ s.register(Github.self) { container in
 #### Make a route?
 
 ```swift
-import GithubConnector
+import GitHubKit
 
 r.get("github", "organizations") { req -> EventLoopFuture<[Organization]> in
     return try Organization.query(on: c).getAll().map() { orgs in
