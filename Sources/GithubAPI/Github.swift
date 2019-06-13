@@ -36,6 +36,12 @@ public enum GithubServer: GithubServerConvertible {
 /// Main Github service class
 public class Github {
     
+    public enum Error: Swift.Error {
+        
+        case fileNotFound(String)
+        
+    }
+    
     /// Main configuration
     public struct Config {
         
@@ -98,6 +104,9 @@ extension Github {
         )
         
         return client.send(clientRequest).flatMap() { response in
+            guard response.status == .ok else {
+                return self.container.eventLoop.makeFailedFuture(Error.fileNotFound(path))
+            }
             do {
                 let data = try response.content.decode(C.self)
                 return self.container.eventLoop.makeSucceededFuture(data)
