@@ -5,11 +5,11 @@
 //  Created by Ondrej Rafaj on 10/06/2019.
 //
 
-import Vapor
+import Foundation
 
 
 /// Organization
-public struct Organization: Content {
+public struct Organization: Codable {
     
     public struct Plan: Codable {
         

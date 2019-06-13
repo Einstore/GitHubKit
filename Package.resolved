@@ -2,60 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "async-kit",
-        "repositoryURL": "https://github.com/vapor/async-kit.git",
-        "state": {
-          "branch": null,
-          "revision": "b5742bfbbe2d60f3b77465a0907777261e418f23",
-          "version": "1.0.0-alpha.1"
-        }
-      },
-      {
-        "package": "console-kit",
-        "repositoryURL": "https://github.com/vapor/console-kit.git",
-        "state": {
-          "branch": null,
-          "revision": "252a8b8e22cc70ebe8a073b241b7275a3b3880d9",
-          "version": "4.0.0-alpha.1"
-        }
-      },
-      {
-        "package": "crypto-kit",
-        "repositoryURL": "https://github.com/vapor/crypto-kit.git",
-        "state": {
-          "branch": null,
-          "revision": "9d5e780ad8f621e14226f0c2824648a9c062d37c",
-          "version": "4.0.0-alpha.1"
-        }
-      },
-      {
-        "package": "nio-websocket-client",
-        "repositoryURL": "https://github.com/vapor/nio-websocket-client.git",
-        "state": {
-          "branch": null,
-          "revision": "3e515024c4c9eab6adb1ab516be15777a28a233e",
-          "version": "1.0.0-alpha.1"
-        }
-      },
-      {
-        "package": "routing-kit",
-        "repositoryURL": "https://github.com/vapor/routing-kit.git",
-        "state": {
-          "branch": null,
-          "revision": "6c7f4b471f9662d05045d82e64e22d5572a16a82",
-          "version": "4.0.0-alpha.1"
-        }
-      },
-      {
-        "package": "swift-log",
-        "repositoryURL": "https://github.com/apple/swift-log.git",
-        "state": {
-          "branch": null,
-          "revision": "f4240bf022a69815241a883c03645444b58ac553",
-          "version": "1.1.0"
-        }
-      },
-      {
         "package": "swift-nio",
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
@@ -65,30 +11,12 @@
         }
       },
       {
-        "package": "swift-nio-extras",
-        "repositoryURL": "https://github.com/apple/swift-nio-extras.git",
-        "state": {
-          "branch": null,
-          "revision": "96e8335180ca61c7187efe47058a1c99eadaf265",
-          "version": "1.1.0"
-        }
-      },
-      {
         "package": "swift-nio-http-client",
-        "repositoryURL": "https://github.com/vapor/swift-nio-http-client.git",
+        "repositoryURL": "https://github.com/swift-server/swift-nio-http-client.git",
         "state": {
-          "branch": null,
-          "revision": "93682abeb568b3df47f0744558c4436bb325f860",
-          "version": "0.0.0"
-        }
-      },
-      {
-        "package": "swift-nio-http2",
-        "repositoryURL": "https://github.com/apple/swift-nio-http2.git",
-        "state": {
-          "branch": null,
-          "revision": "c2638ff60910a0d468ff9a882c8586a827da1a0d",
-          "version": "1.2.1"
+          "branch": "master",
+          "revision": "100b04b02d6eb8e2c6340acfb8d91c49cf9764de",
+          "version": null
         }
       },
       {
@@ -98,15 +26,6 @@
           "branch": null,
           "revision": "dc23a24fbe5d59429eacf45a9add82fdf6ab90e6",
           "version": "2.1.0"
-        }
-      },
-      {
-        "package": "vapor",
-        "repositoryURL": "https://github.com/vapor/vapor.git",
-        "state": {
-          "branch": null,
-          "revision": "95d6c7e2899bb1979a708150d9390e2795b5ae19",
-          "version": "4.0.0-alpha.1.2"
         }
       }
     ]

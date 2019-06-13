@@ -5,7 +5,7 @@
 //  Created by Ondrej Rafaj on 10/06/2019.
 //
 
-import Vapor
+import Foundation
 
 
 public struct QueryableProperty<QueryableType> {
@@ -31,9 +31,6 @@ public protocol Queryable {
     /// Main static function to access github queries
     static func query(on github: Github) -> QueryableProperty<ObjectType>
     
-    /// Main static function to access github queries
-    static func query(on container: Container) throws -> QueryableProperty<ObjectType>
-    
 }
 
 
@@ -41,12 +38,6 @@ extension Queryable {
     
     /// Main static function to access github queries
     public static func query(on github: Github) -> QueryableProperty<Self> {
-        return QueryableProperty<Self>(github: github)
-    }
-    
-    /// Main static function to access github queries
-    public static func query(on c: Container) throws -> QueryableProperty<Self> {
-        let github = try c.make(Github.self)
         return QueryableProperty<Self>(github: github)
     }
     

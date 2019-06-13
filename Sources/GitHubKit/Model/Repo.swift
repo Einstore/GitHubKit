@@ -5,10 +5,10 @@
 //  Created by Ondrej Rafaj on 10/06/2019.
 //
 
-import Vapor
+import Foundation
 
 
-public struct Repo: Content {
+public struct Repo: Codable {
         
     public struct Permissions: Codable {
         

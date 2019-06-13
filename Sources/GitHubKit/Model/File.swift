@@ -5,10 +5,10 @@
 //  Created by Ondrej Rafaj on 11/06/2019.
 //
 
-import Vapor
+import Foundation
 
 
-public struct File: Content {
+public struct File: Codable {
     
     public enum Error: Swift.Error {
         case missingDownloadUrl

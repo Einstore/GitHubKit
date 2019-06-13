@@ -4,16 +4,16 @@ import PackageDescription
 let package = Package(
     name: "app",
     products: [
-        .library(name: "GithubConnector", targets: ["GithubConnector"])
+        .library(name: "GitHubKit", targets: ["GitHubKit"])
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0-alpha.1.2")
+        .package(url: "https://github.com/swift-server/swift-nio-http-client.git", .branch("master"))
     ],
     targets: [
         .target(
-            name: "GithubConnector",
+            name: "GitHubKit",
             dependencies: [
-                "Vapor"
+                "NIOHTTPClient"
             ]
         )
     ]

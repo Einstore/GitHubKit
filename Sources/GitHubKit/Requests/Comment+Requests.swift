@@ -5,7 +5,8 @@
 //  Created by Ondrej Rafaj on 13/06/2019.
 //
 
-import Vapor
+import Foundation
+import NIO
 
 
 extension Comment: Queryable { }

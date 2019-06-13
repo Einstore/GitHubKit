@@ -5,7 +5,10 @@
 //  Created by Ondrej Rafaj on 10/06/2019.
 //
 
-import Vapor
+import Foundation
+import NIO
+import NIOHTTP1
+import NIOHTTPClient
 
 
 /// Server value convertible
@@ -40,6 +43,8 @@ public class Github {
         
         case fileNotFound(String)
         
+        case invalidContent
+        
     }
     
     /// Main configuration
@@ -60,20 +65,47 @@ public class Github {
             self.token = token
             self.server = server
         }
+        
     }
     
     /// Copy of the given configuration
     public let config: Config
     
-    let client: Client
-    
-    let container: Container
+    let client: HTTPClient
     
     /// Initializer
-    public init(_ config: Config, on c: Container) throws {
+    public init(_ config: Config, eventLoopGroupProvider provider: HTTPClient.EventLoopGroupProvider = .createNew) throws {
         self.config = config
-        self.client = try c.make()
-        self.container = c
+        self.client = HTTPClient(eventLoopGroupProvider: provider)
+    }
+    
+    /// Initializer
+    public init(_ config: Config, eventLoop: EventLoop) throws {
+        self.config = config
+        self.client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
+    }
+    
+    var eventLoop: EventLoop {
+        return client.eventLoopGroup.next()
+    }
+    
+    public func syncShutdown() throws {
+        try client.syncShutdown()
+    }
+    
+}
+
+
+extension HTTPClient.Response {
+    
+    mutating func string() -> String? {
+        var b = body
+        return b?.readString(length: body?.capacity ?? 0)
+    }
+    
+    mutating func data() -> Data? {
+        let s = string()
+        return s?.data(using: .utf8)
     }
     
 }
@@ -81,20 +113,34 @@ public class Github {
 
 extension Github {
     
+    fileprivate func req(_ method: HTTPMethod, _ path: String, _ body: HTTPClient.Body? = nil) throws -> HTTPClient.Request {
+        let url = config.url(for: path)
+        let req = try HTTPClient.Request(
+            url: url,
+            method: method,
+            headers: headers,
+            body: body
+        )
+        return req
+    }
+    
     /// Retrieve data from Github API and turn them into a model
     func get<C>(path: String) throws -> EventLoopFuture<C> where C: Decodable {
-        let uri = URI(string: config.url(for: path))
-        
-        let future = client.get(uri, headers: headers)
+        let r = try req(.GET, path)
+        let future = client.execute(request: r)
         return future.flatMap() { response in
+            var response = response
             guard response.status == .ok else {
-                return self.container.eventLoop.makeFailedFuture(Error.fileNotFound(path))
+                return self.eventLoop.makeFailedFuture(Error.fileNotFound(path))
             }
             do {
-                let data = try response.content.decode(C.self)
-                return self.container.eventLoop.makeSucceededFuture(data)
+                guard let data = response.data() else {
+                    return self.eventLoop.makeFailedFuture(Error.invalidContent)
+                }
+                let decoded = try JSONDecoder().decode(C.self, from: data)
+                return self.eventLoop.makeSucceededFuture(decoded)
             } catch {
-                return self.container.eventLoop.makeFailedFuture(error)
+                return self.eventLoop.makeFailedFuture(error)
             }
         }
     }
@@ -116,30 +162,26 @@ extension Github {
     
     /// Delete
     func delete(path: String) throws -> EventLoopFuture<Void> {
-        let uri = URI(string: config.url(for: path))
-        
-        let future = client.get(uri, headers: headers)
+        let r = try req(.GET, path)
+        let future = client.execute(request: r)
         return future.flatMap() { response in
-            guard response.status == .ok else {
-                return self.container.eventLoop.makeFailedFuture(Error.fileNotFound(path))
+            guard response.status == .ok || response.status == .noContent else {
+                return self.eventLoop.makeFailedFuture(Error.fileNotFound(path))
             }
-            return self.container.eventLoop.makeSucceededFuture(Void())
+            return self.eventLoop.makeSucceededFuture(Void())
         }
     }
     
     /// Retrieve a file
-    func get(file url: String) throws -> EventLoopFuture<Data?> {
-        let uri = URI(string: url)
-        
-        let clientRequest = ClientRequest(
-            method: .GET,
-            url: uri,
-            headers: headers,
-            body: nil
-        )
-        
-        return client.send(clientRequest).map() { response in
-            return response.body?.getData(at: 0, length: (response.body?.capacity ?? 0))
+    func get(file path: String) throws -> EventLoopFuture<Data?> {
+        let r = try req(.GET, path)
+        let future = client.execute(request: r)
+        return future.flatMap() { response in
+            var response = response
+            guard response.status == .ok || response.status == .noContent else {
+                return self.eventLoop.makeFailedFuture(Error.fileNotFound(path))
+            }
+            return self.eventLoop.makeSucceededFuture(response.data())
         }
     }
     
@@ -153,50 +195,33 @@ extension Github {
         let loginString = "\(config.username):\(config.token)"
         let loginData = loginString.data(using: String.Encoding.utf8)!
         let base64LoginString = loginData.base64EncodedString()
-        
+
         let headers: HTTPHeaders = [
             "Authorization": "Basic \(base64LoginString)"
         ]
         return headers
     }
     
-    /// Compire request
-    fileprivate func client<E>(response method: HTTPMethod, path: String, post: E?) throws -> EventLoopFuture<ClientResponse> where E: Encodable {
-        let uri = URI(string: config.url(for: path))
-        
-        var body: ByteBuffer?
-        if let post = post {
-            let data = try JSONEncoder().encode(post)
-            var buffer = ByteBufferAllocator().buffer(capacity: data.count)
-            buffer.writeBytes(data)
-        } else {
-            body = nil
-        }
-        
-        let req = ClientRequest(
-            method: method,
-            url: uri,
-            headers: headers,
-            body: body
-        )
-        return client.send(req)
-    }
-    
     /// Send a request
     fileprivate func send<C, E>(method: HTTPMethod, path: String, post: E? = nil) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
-        let future = try client(response: method, path: path, post: post)
+        let r = try req(method, path)
+        let future = client.execute(request: r)
         return future.flatMap() { response in
-            guard response.status == .ok else {
-                return self.container.eventLoop.makeFailedFuture(Error.fileNotFound(path))
+            var response = response
+            guard response.status == .ok || response.status == .created else {
+                return self.eventLoop.makeFailedFuture(Error.fileNotFound(path))
             }
             if response.body?.capacity == 0 {
-                return self.container.eventLoop.makeSucceededFuture(nil)
+                return self.eventLoop.makeSucceededFuture(nil)
             }
             do {
-                let data = try response.content.decode(C.self)
-                return self.container.eventLoop.makeSucceededFuture(data)
+                guard let data = response.data() else {
+                    return self.eventLoop.makeFailedFuture(Error.invalidContent)
+                }
+                let decoded = try JSONDecoder().decode(C.self, from: data)
+                return self.eventLoop.makeSucceededFuture(decoded)
             } catch {
-                return self.container.eventLoop.makeFailedFuture(error)
+                return self.eventLoop.makeFailedFuture(error)
             }
         }
     }
@@ -218,7 +243,10 @@ extension Github.Config {
     
     /// Build URL from a path
     func url(for path: String) -> String {
-        return server.value.finished(with: "/").appending(path)
+        return server.value
+            .trimmingCharacters(in: .init(charactersIn: "/"))
+            .appending("/")
+            .appending(path)
     }
     
 }
