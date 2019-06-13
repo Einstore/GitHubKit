@@ -24,7 +24,7 @@ Don't forget about your target
 ```swift
 .target(
     name: "App",
-    dependencies: [
+    x: [
         "Vapor",
         "GithubConnector"
     ]
