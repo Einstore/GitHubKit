@@ -74,7 +74,7 @@ public class Github {
     let client: HTTPClient
     
     /// Initializer
-    public init(_ config: Config, eventLoopGroupProvider provider: HTTPClient.EventLoopGroupProvider = .createNew) throws {
+    public init(_ config: Config, eventLoopGroupProvider provider: EventLoopGroupProvider = .createNew) throws {
         self.config = config
         self.client = HTTPClient(eventLoopGroupProvider: provider)
     }
