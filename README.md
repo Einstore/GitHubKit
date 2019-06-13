@@ -16,7 +16,7 @@ The below probably don't contain all methods from the spec but it's a good start
 #### Add to your Package.swift file
 
 ```swift
-.package(url: "https://github.com/Einstore/GithubAPI.git", from: "1.0.0")
+.package(url: "https://github.com/Einstore/GithubConnector.git", from: "1.0.0")
 ```
 
 Don't forget about your target
@@ -26,7 +26,7 @@ Don't forget about your target
     name: "App",
     dependencies: [
         "Vapor",
-        "GithubAPI"
+        "GithubConnector"
     ]
 )
 ```
@@ -46,7 +46,7 @@ s.register(Github.self) { container in
 #### Make a route?
 
 ```swift
-import GithubAPI
+import GithubConnector
 
 r.get("github", "organizations") { req -> EventLoopFuture<[Organization]> in
     return try Organization.query(on: c).getAll().map() { orgs in
@@ -116,7 +116,7 @@ Import `Vapor` and conform the main model to `Content` instead of `Codable`.
 First you need to conform the `User` model to `Queryable`. This will enable the `User.query(on: container)` method.
 
 ```swift
-extension Repo: Queryable { }
+extension User: Queryable { }
 ```
 
 Next we create an extension on `QueryableProperty` which is generated each time you request a query on a container from the previous step. Make sure you specify the `QueryableType == User`

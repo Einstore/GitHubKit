@@ -4,14 +4,14 @@ import PackageDescription
 let package = Package(
     name: "app",
     products: [
-        .library(name: "GithubAPI", targets: ["GithubAPI"])
+        .library(name: "GithubConnector", targets: ["GithubConnector"])
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0-alpha")
+        .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0-alpha.1.2")
     ],
     targets: [
         .target(
-            name: "GithubAPI",
+            name: "GithubConnector",
             dependencies: [
                 "Vapor"
             ]
