@@ -1,4 +1,4 @@
-# GithubAPI
+# GithubConnector
 
 Super simple to use Github API client library written for Vapor 4
 
