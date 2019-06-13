@@ -70,9 +70,9 @@ public struct Repo: Codable {
     public let labelsURL: String?
     public let releasesURL: String?
     public let deploymentsURL: String?
-    public let createdAt: Date?
-    public let updatedAt: Date?
-    public let pushedAt: Date?
+    public let createdAt: String
+    public let updatedAt: String?
+    public let pushedAt: String?
     public let gitURL: String?
     public let sshURL: String?
     public let cloneURL: String?

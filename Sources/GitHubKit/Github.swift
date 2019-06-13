@@ -204,7 +204,15 @@ extension Github {
     
     /// Send a request
     fileprivate func send<C, E>(method: HTTPMethod, path: String, post: E? = nil) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
-        let r = try req(method, path)
+        let body: HTTPClient.Body?
+        if let post = post {
+            let jsonData = try JSONEncoder().encode(post)
+            body = .data(jsonData)
+        } else {
+            body = nil
+        }
+        
+        let r = try req(method, path, body)
         let future = client.execute(request: r)
         return future.flatMap() { response in
             var response = response

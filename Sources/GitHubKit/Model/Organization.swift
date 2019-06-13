@@ -50,7 +50,7 @@ public struct Organization: Codable {
     public let followers: Int?
     public let following: Int?
     public let htmlURL: String?
-    public let createdAt: Date?
+    public let createdAt: String
     public let type: String?
     public let totalPrivateRepos: Int?
     public let ownedPrivateRepos: Int?
