@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.0
 import PackageDescription
 
 let package = Package(
@@ -7,7 +7,7 @@ let package = Package(
         .library(name: "GitHubKit", targets: ["GitHubKit"])
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/swift-nio-http-client.git", .exact("0.0.0"))
+        .package(url: "https://github.com/vapor/swift-nio-http-client.git", from: "0.0.0")
     ],
     targets: [
         .target(
