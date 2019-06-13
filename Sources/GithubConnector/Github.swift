@@ -100,17 +100,17 @@ extension Github {
     }
     
     /// Post
-    func post<C, E>(path: String, post: E? = nil) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
+    func post<C, E>(path: String, post: E) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
         return try send(method: .POST, path: path, post: post)
     }
     
     /// Put
-    func put<C, E>(path: String, post: E? = nil) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
+    func put<C, E>(path: String, post: E) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
         return try send(method: .PUT, path: path, post: post)
     }
     
     /// Patch
-    func patch<C, E>(path: String, post: E? = nil) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
+    func patch<C, E>(path: String, post: E) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
         return try send(method: .PATCH, path: path, post: post)
     }
     

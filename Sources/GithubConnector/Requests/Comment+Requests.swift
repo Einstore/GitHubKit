@@ -34,18 +34,20 @@ extension QueryableProperty where QueryableType == Comment {
     }
     
     /// Post a new comment to an issue
-    public func create(comment org: String, repo: String, issue: Int, message: String) throws -> EventLoopFuture<Comment> {
-        return try github.post(path: "repos/\(org.lowercased())/\(repo.lowercased())/issues/\(issue)/comments")
+    public func create(comment org: String, repo: String, issue: Int, message: String) throws -> EventLoopFuture<Comment?> {
+        let message = Comment.Post(body: message)
+        return try github.post(path: "repos/\(org.lowercased())/\(repo.lowercased())/issues/\(issue)/comments", post: message)
     }
     
     /// Post a new comment to a PR
-    public func create(comment org: String, repo: String, pr: Int, message: String) throws -> EventLoopFuture<Comment> {
-        return try create(comment: org, repo: reo, issue: pr, message: message)
+    public func create(comment org: String, repo: String, pr: Int, message: String) throws -> EventLoopFuture<Comment?> {
+        return try create(comment: org, repo: repo, issue: pr, message: message)
     }
     
     /// Update an existing comment
-    public func update(comment org: String, repo: String, comment: Int, message: String) throws -> EventLoopFuture<Comment> {
-        return try github.get(path: "repos/\(org.lowercased())/\(repo.lowercased())/issues/comments/\(comment)")
+    public func update(comment org: String, repo: String, comment: Int, message: String) throws -> EventLoopFuture<Comment?> {
+        let message = Comment.Post(body: message)
+        return try github.patch(path: "repos/\(org.lowercased())/\(repo.lowercased())/issues/comments/\(comment)", post: message)
     }
     
     /// Delete an existing comment
