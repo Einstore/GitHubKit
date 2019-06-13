@@ -12,11 +12,11 @@
       },
       {
         "package": "swift-nio-http-client",
-        "repositoryURL": "https://github.com/swift-server/swift-nio-http-client.git",
+        "repositoryURL": "https://github.com/vapor/swift-nio-http-client.git",
         "state": {
-          "branch": "master",
-          "revision": "100b04b02d6eb8e2c6340acfb8d91c49cf9764de",
-          "version": null
+          "branch": null,
+          "revision": "93682abeb568b3df47f0744558c4436bb325f860",
+          "version": "0.0.0"
         }
       },
       {
