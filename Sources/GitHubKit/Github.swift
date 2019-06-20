@@ -98,14 +98,14 @@ public class Github {
 
 extension HTTPClient.Response {
     
-    mutating func string() -> String? {
-        var b = body
-        return b?.readString(length: body?.capacity ?? 0)
-    }
-    
     mutating func data() -> Data? {
-        let s = string()
-        return s?.data(using: .utf8)
+        guard var byteBuffer = body else {
+            return nil
+        }
+        guard let data = byteBuffer.readBytes(length: byteBuffer.readableBytes) else {
+            return nil
+        }
+        return Data(data)
     }
     
 }

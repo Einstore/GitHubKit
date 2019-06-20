@@ -30,6 +30,9 @@ extension EventLoopFuture where Value == File {
             guard file.type == "file" else {
                 return github.eventLoop.makeFailedFuture(File.Error.notFile(file.type))
             }
+            if let base64Content = file.content, let data = Data(base64Encoded: base64Content, options: [.ignoreUnknownCharacters]) {
+                return github.eventLoop.makeSucceededFuture(data)
+            }
             guard let downloadUrl = file.downloadURL else {
                 return github.eventLoop.makeFailedFuture(File.Error.missingDownloadUrl)
             }

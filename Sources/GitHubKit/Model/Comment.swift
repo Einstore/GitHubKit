@@ -11,9 +11,7 @@ import Foundation
 public struct Comment: Codable {
     
     public struct Post: Codable {
-        
         public let body: String
-        
     }
     
     public let id: Int
