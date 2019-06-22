@@ -1,6 +1,13 @@
 # GitHubKit
 
-Super simple to use Github API client library written for Vapor 4
+[![Slack](https://img.shields.io/badge/join-slack-745EAF.svg?style=flat)](https://bit.ly/2UkyFO8)
+[![iOS](https://img.shields.io/badge/iOS-ff0000.svg?style=flat)](https://github.com/Einstore/Einstore)
+[![macOS](https://img.shields.io/badge/macOS-ff0000.svg?style=flat)](https://github.com/Einstore/Einstore)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-D95E33.svg?style=flat)](https://www.ubuntu.com/download/server)
+[![Swift 5.1](https://img.shields.io/badge/swift-5.1-orange.svg?style=flat)](http://swift.org)
+[![Vapor 4](https://img.shields.io/badge/vapor-4.0-blue.svg?style=flat)](https://vapor.codes)
+
+Super simple to use Github API client library written using Apple NIO
 
 ## Functionality
 
@@ -10,6 +17,12 @@ The below probably don't contain all methods from the spec but it's a good start
 - [x] Repos
 - [x] Files
 - [x] File contents
+- [x] Comments
+- [x] Commits (full management)
+- [x] Branches
+- [x] Webhooks
+- [ ] PR's
+- [ ] Issues
 
 ## Usage
 
@@ -25,29 +38,51 @@ Don't forget about your target
 .target(
     name: "App",
     x: [
-        "Vapor",
         "GitHubKit"
     ]
 )
 ```
 
-#### Configure a service
+#### Configure
 ```swift
-s.register(Github.self) { container in
-    let config = Github.Config(
-        username: "rafiki270",
-        token: "6ae2csf8a9190be8fdgfa864aaeaa3bgff1bga", // This is my real token! please do not use!!!
-        server: "https://github.example.com/api/v3/" // For enterprise github servers (optional)
-    )
-    return try Github(config, on: container)
-}
+let config = Github.Config(
+    username: "orafaj",
+    token: token,
+    server: "https://github.ford.com/api/v3/"
+)
+return try Github(config)
+
+// or
+
+return try Github(config, eventLoop: eventLoop)
+
+// or 
+
+return try Github(config, eventLoopGroupProvider: .createNew)
 ```
 
-#### Make a route?
+#### Use in iOS and server side frameworks
+
+Although this library has been only tested with Vapor 4, using Apple NIO HHTPClient should be compatible with any iOS or server side project.
+
+Please let us know on our slack
+
+#### Use in Vapor 4?
 
 ```swift
 import GitHubKit
 
+// In configure.swift
+services.register(Github.self) { container in
+    let config = Github.Config(
+        username: "orafaj",
+        token: token,
+        server: "https://github.ford.com/api/v3/"
+    )
+    return try Github(config, eventLoop: container.eventLoop)
+}
+
+// In routes (or a controller)
 r.get("github", "organizations") { req -> EventLoopFuture<[Organization]> in
     return try Organization.query(on: c).getAll().map() { orgs in
         return orgs
