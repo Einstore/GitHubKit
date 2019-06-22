@@ -65,7 +65,7 @@ return try Github(config, eventLoopGroupProvider: .createNew)
 
 Although this library has been only tested with Vapor 4, using Apple NIO HHTPClient should be compatible with any iOS or server side project.
 
-Please let us know on our slack
+Please let us know on our [slack](https://bit.ly/2UkyFO8)
 
 #### Use in Vapor 4?
 
