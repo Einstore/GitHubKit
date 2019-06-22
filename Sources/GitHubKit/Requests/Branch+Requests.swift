@@ -14,14 +14,24 @@ extension Branch: Queryable { }
 extension QueryableProperty where QueryableType == Branch {
     
     /// Get specific branch
-    public func get(branch org: String, repo: String, name: String) throws -> EventLoopFuture<Branch> {
-        return try github.get(path: "/repos/\(org.lowercased())/\(repo.lowercased())/branches/\(name.lowercased())")
+    public func get(org: String, repo: String, branch name: String) throws -> EventLoopFuture<Branch> {
+        return try github.get(path: "repos/\(org)/\(repo)/branches/\(name)")
     }
     
     /// Get all available branches
-    public func get(branches org: String, repo: String) throws -> EventLoopFuture<[Branch]> {
-        return try github.get(path: "/repos/\(org.lowercased())/\(repo.lowercased())/branches")
+    public func get(org: String, repo: String) throws -> EventLoopFuture<[Branch]> {
+        return try github.get(path: "repos/\(org)/\(repo)/branches")
     }
     
 }
 
+
+extension EventLoopFuture where Value == Branch {
+    
+    public func latestCommit() -> EventLoopFuture<Commit> {
+        return map { branch in
+            return branch.commit
+        }
+    }
+    
+}

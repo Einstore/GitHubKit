@@ -217,6 +217,9 @@ extension Github {
         return future.flatMap() { response in
             var response = response
             guard response.status == .ok || response.status == .created else {
+                if let data = response.data() {
+                    print("Error data: " + (String(data: data, encoding: .utf8) ?? "No error data to print"))
+                }
                 return self.eventLoop.makeFailedFuture(Error.fileNotFound(path))
             }
             if response.body?.capacity == 0 {
@@ -254,7 +257,7 @@ extension Github.Config {
         return server.value
             .trimmingCharacters(in: .init(charactersIn: "/"))
             .appending("/")
-            .appending(path)
+            .appending(path).lowercased()
     }
     
 }

@@ -37,7 +37,7 @@ public struct Commit: Codable {
         
         public struct Author: Codable {
             public let name: String?
-            public let date: Date?
+            public let date: String?
             public let email: String?
         }
         

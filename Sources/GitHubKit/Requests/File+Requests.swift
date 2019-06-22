@@ -5,7 +5,6 @@
 //  Created by Ondrej Rafaj on 11/06/2019.
 //
 
-import Foundation
 import NIO
 
 
@@ -15,8 +14,12 @@ extension File: Queryable { }
 extension QueryableProperty where QueryableType == File {
     
     /// Get file detail
-    public func get(organization org: String, repo: String, path: String) throws -> EventLoopFuture<File> {
-        return try github.get(path: "repos/\(org.lowercased())/\(repo.lowercased())/contents/\(path)")
+    public func get(organization org: String, repo: String, ref: String? = nil, path: String) throws -> EventLoopFuture<File> {
+        var path = "repos/\(org)/\(repo)/contents/\(path)"
+        if let ref = ref {
+            path.append("?ref=\(ref)")
+        }
+        return try github.get(path: path)
     }
     
 }
