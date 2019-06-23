@@ -52,15 +52,15 @@ let config = Github.Config(
     token: token,
     server: "https://github.ford.com/api/v3/"
 )
-return try Github(config)
+let github = try Github(config)
 
 // or
 
-return try Github(config, eventLoop: eventLoop)
+let github = try Github(config, eventLoop: eventLoop)
 
 // or 
 
-return try Github(config, eventLoopGroupProvider: .createNew)
+let github = try Github(config, eventLoopGroupProvider: .createNew)
 ```
 
 #### Use in iOS and server side frameworks
