@@ -86,7 +86,9 @@ services.register(Github.self) { container in
 
 // In routes (or a controller)
 r.get("github", "organizations") { req -> EventLoopFuture<[Organization]> in
-    return try Organization.query(on: c).getAll().map() { orgs in
+    let github = try c.make(Github.self)
+    return try Organization.query(on: github).getAll().map() { orgs in
+        print(orgs)
         return orgs
     }
 }
