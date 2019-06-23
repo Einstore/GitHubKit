@@ -34,19 +34,7 @@ public struct Commit: Codable {
     }
     
     public struct Info: Codable {
-        
-        public struct Author: Codable {
-            public let name: String?
-            public let date: String?
-            public let email: String?
-        }
-        
-        public struct Verification: Codable {
-            public let verified: Bool?
-            public let reason: String?
-        }
 
-        
         public let author: Author?
         public let url: String?
         public let message: String?
