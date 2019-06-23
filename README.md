@@ -21,6 +21,8 @@ The below probably don't contain all methods from the spec but it's a good start
 - [x] Commits (full management)
 - [x] Branches
 - [x] Webhooks
+- [x] Tags
+- [x] Releases
 - [ ] PR's
 - [ ] Issues
 
