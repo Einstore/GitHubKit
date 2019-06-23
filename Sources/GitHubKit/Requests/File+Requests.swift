@@ -14,7 +14,7 @@ extension File: Queryable { }
 extension QueryableProperty where QueryableType == File {
     
     /// Get file detail
-    public func get(organization org: String, repo: String, ref: String? = nil, path: String) throws -> EventLoopFuture<File> {
+    public func get(org: String, repo: String, ref: String? = nil, path: String) throws -> EventLoopFuture<File> {
         var path = "repos/\(org)/\(repo)/contents/\(path)"
         if let ref = ref {
             path.append("?ref=\(ref)")

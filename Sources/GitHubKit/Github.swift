@@ -125,7 +125,7 @@ extension Github {
     }
     
     /// Retrieve data from Github API and turn them into a model
-    func get<C>(path: String) throws -> EventLoopFuture<C> where C: Decodable {
+    public func get<C>(path: String) throws -> EventLoopFuture<C> where C: Decodable {
         let r = try req(.GET, path)
         let future = client.execute(request: r)
         return future.flatMap() { response in
@@ -146,22 +146,22 @@ extension Github {
     }
     
     /// Post
-    func post<C, E>(path: String, post: E) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
+    public func post<C, E>(path: String, post: E) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
         return try send(method: .POST, path: path, post: post)
     }
     
     /// Put
-    func put<C, E>(path: String, post: E) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
+    public func put<C, E>(path: String, post: E) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
         return try send(method: .PUT, path: path, post: post)
     }
     
     /// Patch
-    func patch<C, E>(path: String, post: E) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
+    public func patch<C, E>(path: String, post: E) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
         return try send(method: .PATCH, path: path, post: post)
     }
     
     /// Delete
-    func delete(path: String) throws -> EventLoopFuture<Void> {
+    public func delete(path: String) throws -> EventLoopFuture<Void> {
         let r = try req(.GET, path)
         let future = client.execute(request: r)
         return future.flatMap() { response in
@@ -173,7 +173,7 @@ extension Github {
     }
     
     /// Retrieve a file
-    func get(file path: String) throws -> EventLoopFuture<Data?> {
+    public func get(file path: String) throws -> EventLoopFuture<Data?> {
         let r = try req(.GET, path)
         let future = client.execute(request: r)
         return future.flatMap() { response in
@@ -191,7 +191,7 @@ extension Github {
 extension Github {
     
     /// Auth headers for request
-    fileprivate var headers: HTTPHeaders {
+    private var headers: HTTPHeaders {
         let loginString = "\(config.username):\(config.token)"
         let loginData = loginString.data(using: String.Encoding.utf8)!
         let base64LoginString = loginData.base64EncodedString()
@@ -203,7 +203,7 @@ extension Github {
     }
     
     /// Send a request
-    fileprivate func send<C, E>(method: HTTPMethod, path: String, post: E? = nil) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
+    private func send<C, E>(method: HTTPMethod, path: String, post: E? = nil) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
         let body: HTTPClient.Body?
         if let post = post {
             let jsonData = try JSONEncoder().encode(post)
