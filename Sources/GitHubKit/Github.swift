@@ -257,7 +257,7 @@ extension Github.Config {
         return server.value
             .trimmingCharacters(in: .init(charactersIn: "/"))
             .appending("/")
-            .appending(path).lowercased()
+            .appending(path)
     }
     
 }
