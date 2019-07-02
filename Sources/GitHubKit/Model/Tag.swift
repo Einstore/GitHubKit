@@ -10,6 +10,22 @@ import Foundation
 
 public struct Tag: Codable {
     
+    public struct List: Codable {
+        
+        public let name: String
+        public let commit: Commit
+        public let zipballUrl: String?
+        public let tarballUrl: String?
+        
+        enum CodingKeys: String, CodingKey {
+            case name
+            case commit
+            case zipballUrl = "zipball_url"
+            case tarballUrl = "tarball_url"
+        }
+        
+    }
+    
     public struct Object: Codable {
         
         public let type: String?

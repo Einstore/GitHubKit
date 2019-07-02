@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Release+Requests.swift
 //  
 //
 //  Created by Ondrej Rafaj on 23/06/2019.

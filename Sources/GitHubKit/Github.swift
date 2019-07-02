@@ -74,9 +74,14 @@ public class Github {
     let client: HTTPClient
     
     /// Initializer
-    public init(_ config: Config, eventLoopGroupProvider provider: EventLoopGroupProvider = .createNew) throws {
+    public init(_ config: Config, eventLoopGroupProvider provider: EventLoopGroupProvider = .createNew, proxy: HTTPClient.Proxy? = nil) throws {
         self.config = config
-        self.client = HTTPClient(eventLoopGroupProvider: provider)
+        var conf = HTTPClient.Configuration()
+        conf.proxy = proxy
+        self.client = HTTPClient(
+            eventLoopGroupProvider: provider,
+            configuration: conf
+        )
     }
     
     /// Initializer
@@ -131,6 +136,10 @@ extension Github {
         return future.flatMap() { response in
             var response = response
             guard response.status == .ok else {
+                var r = response
+                if let data = r.body?.readString(length: response.body!.readableBytes) {
+                    print(data)
+                }
                 return self.eventLoop.makeFailedFuture(Error.fileNotFound(path))
             }
             do {
@@ -197,7 +206,8 @@ extension Github {
         let base64LoginString = loginData.base64EncodedString()
 
         let headers: HTTPHeaders = [
-            "Authorization": "Basic \(base64LoginString)"
+            "Authorization": "Basic \(base64LoginString)",
+            "User-Agent": "GitHubKit(https://github.com/Einstore/GitHubKit)"
         ]
         return headers
     }

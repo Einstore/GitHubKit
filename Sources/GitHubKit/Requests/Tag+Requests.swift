@@ -21,4 +21,11 @@ extension QueryableProperty where QueryableType == Tag {
         return try github.get(path: "repos/\(org)/\(repo)/git/tags/\(sha)")
     }
     
+    /// Get all tags for a repo
+    /// - Parameter org: Organization
+    /// - Parameter repo: Repo
+    public func get(org: String, repo: String) throws -> EventLoopFuture<[Tag.List]> {
+        return try github.get(path: "repos/\(org)/\(repo)/tags")
+    }
+    
 }
