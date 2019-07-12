@@ -8,7 +8,7 @@
 import Foundation
 import NIO
 import NIOHTTP1
-import NIOHTTPClient
+import AsyncHTTPClient
 
 
 /// Server value convertible
@@ -71,14 +71,14 @@ public class Github {
     /// Copy of the given configuration
     public let config: Config
     
-    let client: HTTPClient
+    let client: AsyncHTTPClient.HTTPClient
     
     /// Initializer
-    public init(_ config: Config, eventLoopGroupProvider provider: EventLoopGroupProvider = .createNew, proxy: HTTPClient.Proxy? = nil) throws {
+    public init(_ config: Config, eventLoopGroupProvider provider: AsyncHTTPClient.HTTPClient.EventLoopGroupProvider = .createNew, proxy: AsyncHTTPClient.HTTPClient.Proxy? = nil) throws {
         self.config = config
-        var conf = HTTPClient.Configuration()
+        var conf = AsyncHTTPClient.HTTPClient.Configuration()
         conf.proxy = proxy
-        self.client = HTTPClient(
+        self.client = AsyncHTTPClient.HTTPClient(
             eventLoopGroupProvider: provider,
             configuration: conf
         )
@@ -87,7 +87,7 @@ public class Github {
     /// Initializer
     public init(_ config: Config, eventLoop: EventLoop) throws {
         self.config = config
-        self.client = HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
+        self.client = AsyncHTTPClient.HTTPClient(eventLoopGroupProvider: .shared(eventLoop))
     }
     
     var eventLoop: EventLoop {
@@ -101,7 +101,7 @@ public class Github {
 }
 
 
-extension HTTPClient.Response {
+extension AsyncHTTPClient.HTTPClient.Response {
     
     mutating func data() -> Data? {
         guard var byteBuffer = body else {
@@ -118,9 +118,9 @@ extension HTTPClient.Response {
 
 extension Github {
     
-    fileprivate func req(_ method: HTTPMethod, _ path: String, _ body: HTTPClient.Body? = nil) throws -> HTTPClient.Request {
+    fileprivate func req(_ method: HTTPMethod, _ path: String, _ body: AsyncHTTPClient.HTTPClient.Body? = nil) throws -> AsyncHTTPClient.HTTPClient.Request {
         let url = config.url(for: path)
-        let req = try HTTPClient.Request(
+        let req = try AsyncHTTPClient.HTTPClient.Request(
             url: url,
             method: method,
             headers: headers,
@@ -214,7 +214,7 @@ extension Github {
     
     /// Send a request
     private func send<C, E>(method: HTTPMethod, path: String, post: E? = nil) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
-        let body: HTTPClient.Body?
+        let body: AsyncHTTPClient.HTTPClient.Body?
         if let post = post {
             let jsonData = try JSONEncoder().encode(post)
             body = .data(jsonData)
