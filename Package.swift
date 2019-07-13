@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "app",
+    name: "GitHubKit",
     products: [
         .library(name: "GitHubKit", targets: ["GitHubKit"])
     ],
