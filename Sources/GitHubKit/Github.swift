@@ -41,9 +41,11 @@ public class Github {
     
     public enum Error: Swift.Error {
         
-        case fileNotFound(String)
+        case notFound(String)
         
         case invalidContent
+        
+        case missingRediretHeaders
         
     }
     
@@ -66,6 +68,12 @@ public class Github {
             self.server = server
         }
         
+    }
+    
+    /// Format of an archive
+    public enum Format: String {
+        case tarball
+        case zipball
     }
     
     /// Copy of the given configuration
@@ -140,7 +148,7 @@ extension Github {
                 if let data = r.body?.readString(length: response.body!.readableBytes) {
                     print(data)
                 }
-                return self.eventLoop.makeFailedFuture(Error.fileNotFound(path))
+                return self.eventLoop.makeFailedFuture(Error.notFound(path))
             }
             do {
                 guard let data = response.data() else {
@@ -175,7 +183,7 @@ extension Github {
         let future = client.execute(request: r)
         return future.flatMap() { response in
             guard response.status == .ok || response.status == .noContent else {
-                return self.eventLoop.makeFailedFuture(Error.fileNotFound(path))
+                return self.eventLoop.makeFailedFuture(Error.notFound(path))
             }
             return self.eventLoop.makeSucceededFuture(Void())
         }
@@ -188,10 +196,30 @@ extension Github {
         return future.flatMap() { response in
             var response = response
             guard response.status == .ok || response.status == .noContent else {
-                return self.eventLoop.makeFailedFuture(Error.fileNotFound(path))
+                return self.eventLoop.makeFailedFuture(Error.notFound(path))
             }
             return self.eventLoop.makeSucceededFuture(response.data())
         }
+    }
+    
+    /// Get a redirect link
+    public func redirect(file path: String, status: HTTPResponseStatus = .found) throws -> EventLoopFuture<String> {
+        let r = try req(.GET, path)
+        let future = client.execute(request: r)
+        return future.flatMap() { response in
+            guard response.status == status else {
+                return self.eventLoop.makeFailedFuture(Error.notFound(path))
+            }
+            guard response.headers.contains(name: "Location"), let redirect = response.headers["Location"].first else {
+                return self.eventLoop.makeFailedFuture(Error.missingRediretHeaders)
+            }
+            return self.eventLoop.makeSucceededFuture(redirect)
+        }
+    }
+    
+    /// Get a temporary download link for an archive
+    public func download(org: String, repo: String, ref: String, format: Format = .tarball) throws -> EventLoopFuture<String> {
+        return try redirect(file: "/repos/\(org)/\(repo)/\(format.rawValue)/\(ref)", status: .found)
     }
     
 }
@@ -230,7 +258,7 @@ extension Github {
                 if let data = response.data() {
                     print("Error data: " + (String(data: data, encoding: .utf8) ?? "No error data to print"))
                 }
-                return self.eventLoop.makeFailedFuture(Error.fileNotFound(path))
+                return self.eventLoop.makeFailedFuture(Error.notFound(path))
             }
             if response.body?.capacity == 0 {
                 return self.eventLoop.makeSucceededFuture(nil)
