@@ -219,7 +219,7 @@ extension Github {
     
     /// Get a temporary download link for an archive
     public func download(org: String, repo: String, ref: String, format: Format = .tarball) throws -> EventLoopFuture<String> {
-        return try redirect(file: "/repos/\(org)/\(repo)/\(format.rawValue)/\(ref)", status: .found)
+        return try redirect(file: "repos/\(org)/\(repo)/\(format.rawValue)/\(ref)", status: .found)
     }
     
 }
