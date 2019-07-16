@@ -1,5 +1,5 @@
 //
-//  File 2.swift
+//  Branch.swift
 //  
 //
 //  Created by Ondrej Rafaj on 19/06/2019.

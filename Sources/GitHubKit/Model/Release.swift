@@ -1,5 +1,5 @@
 //
-//  File 2.swift
+//  Release.swift
 //  
 //
 //  Created by Ondrej Rafaj on 23/06/2019.
