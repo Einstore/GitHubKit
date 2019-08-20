@@ -28,7 +28,7 @@ extension QueryableProperty where QueryableType == File {
 extension EventLoopFuture where Value == File {
     
     /// Download file content if available
-    public func download(on github: Github) throws -> EventLoopFuture<Data> {
+    public func download(on github: GitHub) throws -> EventLoopFuture<Data> {
         return flatMap { file in
             guard file.type == "file" else {
                 return github.eventLoop.makeFailedFuture(File.Error.notFile(file.type))

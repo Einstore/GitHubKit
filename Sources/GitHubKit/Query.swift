@@ -1,10 +1,3 @@
-//
-//  Query.swift
-//  
-//
-//  Created by Ondrej Rafaj on 10/06/2019.
-//
-
 import Foundation
 
 
@@ -13,9 +6,9 @@ public struct QueryableProperty<QueryableType> {
     /// Queryable element accessor
     public var element: QueryableType?
     
-    let github: Github
+    let github: GitHub
     
-    init(_ obj: QueryableType? = nil, github: Github) {
+    init(_ obj: QueryableType? = nil, github: GitHub) {
         element = obj
         self.github = github
     }
@@ -29,7 +22,7 @@ public protocol Queryable {
     associatedtype ObjectType
 
     /// Main static function to access github queries
-    static func query(on github: Github) -> QueryableProperty<ObjectType>
+    static func query(on github: GitHub) -> QueryableProperty<ObjectType>
     
 }
 
@@ -37,7 +30,7 @@ public protocol Queryable {
 extension Queryable {
     
     /// Main static function to access github queries
-    public static func query(on github: Github) -> QueryableProperty<Self> {
+    public static func query(on github: GitHub) -> QueryableProperty<Self> {
         return QueryableProperty<Self>(github: github)
     }
     

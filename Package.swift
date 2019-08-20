@@ -4,7 +4,8 @@ import PackageDescription
 let package = Package(
     name: "GitHubKit",
     products: [
-        .library(name: "GitHubKit", targets: ["GitHubKit"])
+        .library(name: "GitHubKit", targets: ["GitHubKit"]),
+        .library(name: "GitHubKitMocks", targets: ["GitHubKitMocks"])
     ],
     dependencies: [
         .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.0.0-alpha.1")
@@ -14,6 +15,12 @@ let package = Package(
             name: "GitHubKit",
             dependencies: [
                 "AsyncHTTPClient"
+            ]
+        ),
+        .target(
+            name: "GitHubKitMocks",
+            dependencies: [
+                "GitHubKit"
             ]
         )
     ]

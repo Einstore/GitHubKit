@@ -1,43 +1,11 @@
-//
-//  Github.swift
-//  
-//
-//  Created by Ondrej Rafaj on 10/06/2019.
-//
-
 import Foundation
 import NIO
 import NIOHTTP1
 import AsyncHTTPClient
 
 
-/// Server value convertible
-public protocol GithubServerConvertible {
-    var value: String { get }
-}
-
-/// Predefined github server values
-public enum GithubServer: GithubServerConvertible {
-    
-    /// api.github.com
-    case github
-    
-    /// Enterprise Github
-    case enterprise(String)
-    
-    /// Server URL
-    public var value: String {
-        switch self {
-        case .github:
-            return "https://api.github.com"
-        case .enterprise(let url):
-            return url
-        }
-    }
-}
-
-/// Main Github service class
-public class Github {
+/// Main GitHub service class
+public class GitHub: GitHubClient {
     
     public enum Error: Swift.Error {
         
@@ -52,17 +20,17 @@ public class Github {
     /// Main configuration
     public struct Config {
         
-        /// Github username associated with a personal access token
+        /// GitHub username associated with a personal access token
         public let username: String
         
         /// Personal access token
         public let token: String
         
         /// Server URL
-        public let server: GithubServerConvertible
+        public let server: GitHubServerConvertible
         
         /// Initializer
-        public init(username: String, token: String, server: GithubServerConvertible = GithubServer.github) {
+        public init(username: String, token: String, server: GitHubServerConvertible = GitHubServer.github) {
             self.username = username
             self.token = token
             self.server = server
@@ -124,7 +92,7 @@ extension AsyncHTTPClient.HTTPClient.Response {
 }
 
 
-extension Github {
+extension GitHub {
     
     fileprivate func req(_ method: HTTPMethod, _ path: String, _ body: AsyncHTTPClient.HTTPClient.Body? = nil) throws -> AsyncHTTPClient.HTTPClient.Request {
         let url = config.url(for: path)
@@ -137,7 +105,7 @@ extension Github {
         return req
     }
     
-    /// Retrieve data from Github API and turn them into a model
+    /// Retrieve data from GitHub API and turn them into a model
     public func get<C>(path: String) throws -> EventLoopFuture<C> where C: Decodable {
         let r = try req(.GET, path)
         let future = client.execute(request: r)
@@ -225,7 +193,7 @@ extension Github {
 }
 
 
-extension Github {
+extension GitHub {
     
     /// Auth headers for request
     private var headers: HTTPHeaders {
@@ -278,7 +246,7 @@ extension Github {
 }
 
 
-extension String: GithubServerConvertible {
+extension String: GitHubServerConvertible {
     
     /// Self value of a string
     public var value: String {
@@ -288,7 +256,7 @@ extension String: GithubServerConvertible {
 }
 
 
-extension Github.Config {
+extension GitHub.Config {
     
     /// Build URL from a path
     func url(for path: String) -> String {
