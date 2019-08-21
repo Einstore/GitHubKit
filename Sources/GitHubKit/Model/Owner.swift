@@ -1,33 +1,26 @@
-//
-//  Owner.swift
-//  
-//
-//  Created by Ondrej Rafaj on 13/06/2019.
-//
-
 import Foundation
 
 
 public struct Owner: Codable {
     
-    public let login: String
-    public let id: Int
-    public let nodeID: String?
-    public let avatarURL: String?
-    public let gravatarID: String?
-    public let url: String?
-    public let htmlURL: String?
-    public let followersURL: String?
-    public let followingURL: String?
-    public let gistsURL: String?
-    public let starredURL: String?
-    public let subscriptionsURL: String?
-    public let organizationsURL: String?
-    public let reposURL: String?
-    public let eventsURL: String?
-    public let receivedEventsURL: String?
-    public let type: String?
-    public let siteAdmin: Bool?
+    public internal(set) var login: String
+    public internal(set) var id: Int
+    public internal(set) var nodeID: String?
+    public internal(set) var avatarURL: String?
+    public internal(set) var gravatarID: String?
+    public internal(set) var url: String?
+    public internal(set) var htmlURL: String?
+    public internal(set) var followersURL: String?
+    public internal(set) var followingURL: String?
+    public internal(set) var gistsURL: String?
+    public internal(set) var starredURL: String?
+    public internal(set) var subscriptionsURL: String?
+    public internal(set) var organizationsURL: String?
+    public internal(set) var reposURL: String?
+    public internal(set) var eventsURL: String?
+    public internal(set) var receivedEventsURL: String?
+    public internal(set) var type: String?
+    public internal(set) var siteAdmin: Bool?
     
     enum CodingKeys: String, CodingKey {
         case login = "login"

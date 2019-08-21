@@ -1,27 +1,20 @@
-//
-//  Comment.swift
-//  
-//
-//  Created by Ondrej Rafaj on 13/06/2019.
-//
-
 import Foundation
 
 
 public struct Comment: Codable {
     
     public struct Post: Codable {
-        public let body: String
+        public internal(set) var body: String
     }
     
-    public let id: Int
-    public let nodeID: String
-    public let url: String?
-    public let htmlURL: String?
-    public let body: String
-    public let user: Owner
-    public let createdAt: String
-    public let updatedAt: String?
+    public internal(set) var id: Int
+    public internal(set) var nodeID: String
+    public internal(set) var url: String?
+    public internal(set) var htmlURL: String?
+    public internal(set) var body: String
+    public internal(set) var user: Owner
+    public internal(set) var createdAt: String
+    public internal(set) var updatedAt: String?
     
     enum CodingKeys: String, CodingKey {
         case id

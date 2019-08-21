@@ -1,27 +1,76 @@
 import GitHubKit
 import NIOHTTP1
+import NIO
+
+
+public protocol MockResponseConvertible {
+    var mockResponse: GitHubMock.MockResponse { get }
+}
 
 
 public class GitHubMock: GitHubClient {
     
+    public struct MockResponse: MockResponseConvertible, Hashable {
+        
+        public let method: HTTPMethod
+        public let path: String
+        
+        public init(_ method: HTTPMethod = .GET, _ path: String) {
+            self.method = method
+            self.path = ""
+        }
+        
+        public var mockResponse: MockResponse {
+            return self
+        }
+        
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(path)
+            hasher.combine(method.rawValue)
+        }
+        
+    }
+    
+    public var eventLoop = EmbeddedEventLoop()
+
+    public var responses: [MockResponse: Decodable?] = [:]
+    
+    public func add<C>(response object: C? = nil, path: String, method: HTTPMethod = .GET) where C: Decodable {
+        responses[MockResponse(method, path)] = object
+    }
+        
+    func response<C>(_ method: HTTPMethod, _ path: String) -> C? where C: Decodable {
+        return responses[MockResponse(method, path)] as? C
+    }
+    
+    func future<C>(response method: HTTPMethod, _ path: String) -> EventLoopFuture<C> where C: Decodable {
+        guard let d: C = response(.GET, path) else {
+            return eventLoop.makeFailedFuture(GitHub.Error.notFound(path))
+        }
+        return eventLoop.makeSucceededFuture(d)
+    }
+    
     public func get<C>(path: String) throws -> EventLoopFuture<C> where C : Decodable {
-        fatalError()
+        return future(response: .GET, path)
     }
     
     public func post<C, E>(path: String, post: E) throws -> EventLoopFuture<C?> where C : Decodable, E : Encodable {
-        fatalError()
+        return future(response: .POST, path)
     }
     
     public func put<C, E>(path: String, post: E) throws -> EventLoopFuture<C?> where C : Decodable, E : Encodable {
-        fatalError()
+        return future(response: .PUT, path)
     }
     
     public func patch<C, E>(path: String, post: E) throws -> EventLoopFuture<C?> where C : Decodable, E : Encodable {
-        fatalError()
+        return future(response: .PATCH, path)
     }
     
     public func delete(path: String) throws -> EventLoopFuture<Void> {
-        fatalError()
+        guard let _ = responses.index(forKey: GitHubMock.MockResponse(.DELETE, path)) else {
+            return eventLoop.makeFailedFuture(GitHub.Error.notFound(path))
+        }
+        return eventLoop.makeSucceededFuture(Void())
     }
     
     public func get(file path: String) throws -> EventLoopFuture<Data?> {
@@ -37,5 +86,16 @@ public class GitHubMock: GitHubClient {
     }
     
     public func syncShutdown() throws { }
+    
+    public init() { }
+    
+}
+
+
+extension String: MockResponseConvertible {
+    
+    public var mockResponse: GitHubMock.MockResponse {
+        return GitHubMock.MockResponse(.GET, self)
+    }
     
 }

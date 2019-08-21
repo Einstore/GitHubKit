@@ -6,9 +6,9 @@ public struct QueryableProperty<QueryableType> {
     /// Queryable element accessor
     public var element: QueryableType?
     
-    let github: GitHub
+    let github: GitHubClient
     
-    init(_ obj: QueryableType? = nil, github: GitHub) {
+    init(_ obj: QueryableType? = nil, github: GitHubClient) {
         element = obj
         self.github = github
     }
@@ -22,7 +22,7 @@ public protocol Queryable {
     associatedtype ObjectType
 
     /// Main static function to access github queries
-    static func query(on github: GitHub) -> QueryableProperty<ObjectType>
+    static func query(on github: GitHubClient) -> QueryableProperty<ObjectType>
     
 }
 
@@ -30,7 +30,7 @@ public protocol Queryable {
 extension Queryable {
     
     /// Main static function to access github queries
-    public static func query(on github: GitHub) -> QueryableProperty<Self> {
+    public static func query(on github: GitHubClient) -> QueryableProperty<Self> {
         return QueryableProperty<Self>(github: github)
     }
     

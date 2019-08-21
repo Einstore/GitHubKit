@@ -1,10 +1,3 @@
-//
-//  GitCommit.swift
-//  
-//
-//  Created by Ondrej Rafaj on 23/06/2019.
-//
-
 import Foundation
 
 
@@ -12,8 +5,8 @@ public struct GitCommit: Codable {
     
     public struct Tree: Codable {
         
-        public let url: String
-        public let sha: String
+        public internal(set) var url: String
+        public internal(set) var sha: String
         
         enum CodingKeys: String, CodingKey {
             case url = "url"
@@ -22,14 +15,14 @@ public struct GitCommit: Codable {
         
     }
     
-    public let sha: String
-    public let url: String?
-    public let author: Author?
-    public let committer: Author?
-    public let message: String?
-    public let tree: Tree
-    public let parents: [Tree]?
-    public let verification: Verification?
+    public internal(set) var sha: String
+    public internal(set) var url: String?
+    public internal(set) var author: Author?
+    public internal(set) var committer: Author?
+    public internal(set) var message: String?
+    public internal(set) var tree: Tree
+    public internal(set) var parents: [Tree]?
+    public internal(set) var verification: Verification?
     
     enum CodingKeys: String, CodingKey {
         case sha = "sha"

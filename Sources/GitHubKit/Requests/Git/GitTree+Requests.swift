@@ -1,10 +1,3 @@
-//
-//  GitTree+Requests.swift
-//  
-//
-//  Created by Ondrej Rafaj on 23/06/2019.
-//
-
 import NIO
 
 

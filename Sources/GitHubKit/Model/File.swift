@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Ondrej Rafaj on 11/06/2019.
-//
-
 import Foundation
 
 
@@ -16,9 +9,9 @@ public struct File: Codable {
     }
     
     public struct Links: Codable {
-        public let git: String
-        public let linkSelf: String
-        public let html: String
+        public internal(set) var git: String
+        public internal(set) var linkSelf: String
+        public internal(set) var html: String
         
         enum CodingKeys: String, CodingKey {
             case git = "git"
@@ -28,20 +21,20 @@ public struct File: Codable {
         
     }
     
-    public let type: String
-    public let encoding: String
-    public let size: Int
-    public let name: String
-    public let path: String
-    public let content: String?
-    public let sha: String
-    public let target: String?
-    public let submoduleGitUrl: String?
-    public let url: String
-    public let gitURL: String
-    public let htmlURL: String
-    public let downloadURL: String?
-    public let links: Links
+    public internal(set) var type: String
+    public internal(set) var encoding: String
+    public internal(set) var size: Int
+    public internal(set) var name: String
+    public internal(set) var path: String
+    public internal(set) var content: String?
+    public internal(set) var sha: String
+    public internal(set) var target: String?
+    public internal(set) var submoduleGitUrl: String?
+    public internal(set) var url: String
+    public internal(set) var gitURL: String
+    public internal(set) var htmlURL: String
+    public internal(set) var downloadURL: String?
+    public internal(set) var links: Links
     
     enum CodingKeys: String, CodingKey {
         case type = "type"

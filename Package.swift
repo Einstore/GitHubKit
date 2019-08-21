@@ -22,6 +22,12 @@ let package = Package(
             dependencies: [
                 "GitHubKit"
             ]
+        ),
+        .testTarget(
+            name: "GitHubKitMocksTests",
+            dependencies: [
+                "GitHubKitMocks"
+            ]
         )
     ]
 )

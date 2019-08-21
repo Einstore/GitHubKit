@@ -1,27 +1,20 @@
-//
-//  Commit.swift
-//  
-//
-//  Created by Ondrej Rafaj on 19/06/2019.
-//
-
 import Foundation
 
 
 public struct Commit: Codable {
     
     public struct Tree: Codable {
-        public let sha: String?
-        public let url: String?
+        public internal(set) var sha: String?
+        public internal(set) var url: String?
     }
     
     public struct Author: Codable {
         
-        public let gravatarID: String?
-        public let avatarURL: String?
-        public let url: String?
-        public let id: Int?
-        public let login: String?
+        public internal(set) var gravatarID: String?
+        public internal(set) var avatarURL: String?
+        public internal(set) var url: String?
+        public internal(set) var id: Int?
+        public internal(set) var login: String?
         
         enum CodingKeys: String, CodingKey {
             case gravatarID = "gravatar_id"
@@ -35,22 +28,22 @@ public struct Commit: Codable {
     
     public struct Info: Codable {
 
-        public let author: Author?
-        public let url: String?
-        public let message: String?
-        public let tree: Tree?
-        public let committer: Author?
-        public let verification: Verification?
+        public internal(set) var author: Author?
+        public internal(set) var url: String?
+        public internal(set) var message: String?
+        public internal(set) var tree: Tree?
+        public internal(set) var committer: Author?
+        public internal(set) var verification: Verification?
     }
 
     
-    public let sha: String
-    public let nodeID: String?
-    public let commit: Info?
-    public let author: Author?
-    public let parents: [Tree]?
-    public let url: String
-    public let committer: Author?
+    public internal(set) var sha: String
+    public internal(set) var nodeID: String?
+    public internal(set) var commit: Info?
+    public internal(set) var author: Author?
+    public internal(set) var parents: [Tree]?
+    public internal(set) var url: String
+    public internal(set) var committer: Author?
     
     enum CodingKeys: String, CodingKey {
         case sha = "sha"

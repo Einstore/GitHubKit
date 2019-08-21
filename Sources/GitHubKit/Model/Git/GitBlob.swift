@@ -1,19 +1,12 @@
-//
-//  GitBlob.swift
-//  
-//
-//  Created by Ondrej Rafaj on 23/06/2019.
-//
-
 import Foundation
 
 
 public struct GitBlob: Codable {
     
-    public let content: String
-    public let encoding: String
-    public let url: String?
-    public let sha: String
-    public let size: Int?
+    public internal(set) var content: String
+    public internal(set) var encoding: String
+    public internal(set) var url: String?
+    public internal(set) var sha: String
+    public internal(set) var size: Int?
     
 }

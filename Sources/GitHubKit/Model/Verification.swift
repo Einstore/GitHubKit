@@ -1,19 +1,12 @@
-//
-//  Verification.swift
-//  
-//
-//  Created by Ondrej Rafaj on 23/06/2019.
-//
-
 import Foundation
 
 
 public struct Verification: Codable {
     
-    public let verified: Bool?
-    public let reason: String?
-    public let signature: String?
-    public let payload: String?
+    public internal(set) var verified: Bool?
+    public internal(set) var reason: String?
+    public internal(set) var signature: String?
+    public internal(set) var payload: String?
     
     enum CodingKeys: String, CodingKey {
         case verified = "verified"

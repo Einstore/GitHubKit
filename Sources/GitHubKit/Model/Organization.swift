@@ -1,10 +1,3 @@
-//
-//  Organization.swift
-//  
-//
-//  Created by Ondrej Rafaj on 10/06/2019.
-//
-
 import Foundation
 
 
@@ -13,9 +6,9 @@ public struct Organization: Codable {
     
     public struct Plan: Codable {
         
-        public let name: String?
-        public let space: Int?
-        public let privateRepos: Int?
+        public internal(set) var name: String?
+        public internal(set) var space: Int?
+        public internal(set) var privateRepos: Int?
         
         enum CodingKeys: String, CodingKey {
             case name = "name"
@@ -25,44 +18,44 @@ public struct Organization: Codable {
 
     }
     
-    public let login: String
-    public let id: Int
-    public let nodeID: String?
-    public let url: String?
-    public let reposURL: String?
-    public let eventsURL: String?
-    public let hooksURL: String?
-    public let issuesURL: String?
-    public let membersURL: String?
-    public let publicMembersURL: String?
-    public let avatarURL: String?
-    public let organizationDescription: String?
-    public let name: String?
-    public let company: String?
-    public let blog: String?
-    public let location: String?
-    public let email: String?
-    public let isVerified: Bool?
-    public let hasOrganizationProjects: Bool?
-    public let hasRepositoryProjects: Bool?
-    public let publicRepos: Int?
-    public let publicGists: Int?
-    public let followers: Int?
-    public let following: Int?
-    public let htmlURL: String?
-    public let createdAt: String?
-    public let type: String?
-    public let totalPrivateRepos: Int?
-    public let ownedPrivateRepos: Int?
-    public let privateGists: Int?
-    public let diskUsage: Int?
-    public let collaborators: Int?
-    public let billingEmail: String?
-    public let plan: Plan?
-    public let defaultRepositorySettings: String?
-    public let membersCanCreateRepositories: Bool?
-    public let twoFactorRequirementEnabled: Bool?
-    public let membersAllowedRepositoryCreationType: String?
+    public internal(set) var login: String
+    public internal(set) var id: Int
+    public internal(set) var nodeID: String?
+    public internal(set) var url: String?
+    public internal(set) var reposURL: String?
+    public internal(set) var eventsURL: String?
+    public internal(set) var hooksURL: String?
+    public internal(set) var issuesURL: String?
+    public internal(set) var membersURL: String?
+    public internal(set) var publicMembersURL: String?
+    public internal(set) var avatarURL: String?
+    public internal(set) var organizationDescription: String?
+    public internal(set) var name: String?
+    public internal(set) var company: String?
+    public internal(set) var blog: String?
+    public internal(set) var location: String?
+    public internal(set) var email: String?
+    public internal(set) var isVerified: Bool?
+    public internal(set) var hasOrganizationProjects: Bool?
+    public internal(set) var hasRepositoryProjects: Bool?
+    public internal(set) var publicRepos: Int?
+    public internal(set) var publicGists: Int?
+    public internal(set) var followers: Int?
+    public internal(set) var following: Int?
+    public internal(set) var htmlURL: String?
+    public internal(set) var createdAt: String?
+    public internal(set) var type: String?
+    public internal(set) var totalPrivateRepos: Int?
+    public internal(set) var ownedPrivateRepos: Int?
+    public internal(set) var privateGists: Int?
+    public internal(set) var diskUsage: Int?
+    public internal(set) var collaborators: Int?
+    public internal(set) var billingEmail: String?
+    public internal(set) var plan: Plan?
+    public internal(set) var defaultRepositorySettings: String?
+    public internal(set) var membersCanCreateRepositories: Bool?
+    public internal(set) var twoFactorRequirementEnabled: Bool?
+    public internal(set) var membersAllowedRepositoryCreationType: String?
     
     enum CodingKeys: String, CodingKey {
         case login = "login"

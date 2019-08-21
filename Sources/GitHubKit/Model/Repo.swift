@@ -1,10 +1,3 @@
-//
-//  Repo.swift
-//  
-//
-//  Created by Ondrej Rafaj on 10/06/2019.
-//
-
 import Foundation
 
 
@@ -12,9 +5,9 @@ public struct Repo: Codable {
         
     public struct Permissions: Codable {
         
-        public let admin: Bool
-        public let push: Bool
-        public let pull: Bool
+        public internal(set) var admin: Bool
+        public internal(set) var push: Bool
+        public internal(set) var pull: Bool
         
         enum CodingKeys: String, CodingKey {
             case admin = "admin"
@@ -24,80 +17,80 @@ public struct Repo: Codable {
         
     }
     
-    public let id: Int
-    public let nodeID: String?
-    public let name: String
-    public let fullName: String
-    public let repoPrivate: Bool
-    public let owner: Owner
-    public let htmlURL: String
-    public let repoDescription: String?
-    public let fork: Bool
-    public let url: String?
-    public let forksURL: String?
-    public let keysURL: String?
-    public let collaboratorsURL: String?
-    public let teamsURL: String?
-    public let hooksURL: String?
-    public let issueEventsURL: String?
-    public let eventsURL: String?
-    public let assigneesURL: String?
-    public let branchesURL: String?
-    public let tagsURL: String?
-    public let blobsURL: String?
-    public let gitTagsURL: String?
-    public let gitRefsURL: String?
-    public let treesURL: String?
-    public let statusesURL: String?
-    public let languagesURL: String?
-    public let stargazersURL: String?
-    public let contributorsURL: String?
-    public let subscribersURL: String?
-    public let subscriptionURL: String?
-    public let commitsURL: String?
-    public let gitCommitsURL: String?
-    public let commentsURL: String?
-    public let issueCommentURL: String?
-    public let contentsURL: String?
-    public let compareURL: String?
-    public let mergesURL: String?
-    public let archiveURL: String?
-    public let downloadsURL: String?
-    public let issuesURL: String?
-    public let pullsURL: String?
-    public let milestonesURL: String?
-    public let notificationsURL: String?
-    public let labelsURL: String?
-    public let releasesURL: String?
-    public let deploymentsURL: String?
-    public let createdAt: String
-    public let updatedAt: String?
-    public let pushedAt: String?
-    public let gitURL: String?
-    public let sshURL: String?
-    public let cloneURL: String?
-    public let svnURL: String?
-    public let homepage: String?
-    public let size: Int?
-    public let stargazersCount: Int?
-    public let watchersCount: Int?
-    public let language: String?
-    public let hasIssues: Bool?
-    public let hasProjects: Bool?
-    public let hasDownloads: Bool?
-    public let hasWiki: Bool?
-    public let hasPages: Bool?
-    public let forksCount: Int?
-    public let mirrorURL: String?
-    public let archived: Bool?
-    public let disabled: Bool?
-    public let openIssuesCount: Int?
-    public let license: String?
-    public let forks: Int?
-    public let openIssues: Int?
-    public let watchers: Int?
-    public let defaultBranch: String?
-    public let permissions: Permissions?
+    public internal(set) var id: Int
+    public internal(set) var nodeID: String?
+    public internal(set) var name: String
+    public internal(set) var fullName: String
+    public internal(set) var repoPrivate: Bool
+    public internal(set) var owner: Owner
+    public internal(set) var htmlURL: String
+    public internal(set) var repoDescription: String?
+    public internal(set) var fork: Bool
+    public internal(set) var url: String?
+    public internal(set) var forksURL: String?
+    public internal(set) var keysURL: String?
+    public internal(set) var collaboratorsURL: String?
+    public internal(set) var teamsURL: String?
+    public internal(set) var hooksURL: String?
+    public internal(set) var issueEventsURL: String?
+    public internal(set) var eventsURL: String?
+    public internal(set) var assigneesURL: String?
+    public internal(set) var branchesURL: String?
+    public internal(set) var tagsURL: String?
+    public internal(set) var blobsURL: String?
+    public internal(set) var gitTagsURL: String?
+    public internal(set) var gitRefsURL: String?
+    public internal(set) var treesURL: String?
+    public internal(set) var statusesURL: String?
+    public internal(set) var languagesURL: String?
+    public internal(set) var stargazersURL: String?
+    public internal(set) var contributorsURL: String?
+    public internal(set) var subscribersURL: String?
+    public internal(set) var subscriptionURL: String?
+    public internal(set) var commitsURL: String?
+    public internal(set) var gitCommitsURL: String?
+    public internal(set) var commentsURL: String?
+    public internal(set) var issueCommentURL: String?
+    public internal(set) var contentsURL: String?
+    public internal(set) var compareURL: String?
+    public internal(set) var mergesURL: String?
+    public internal(set) var archiveURL: String?
+    public internal(set) var downloadsURL: String?
+    public internal(set) var issuesURL: String?
+    public internal(set) var pullsURL: String?
+    public internal(set) var milestonesURL: String?
+    public internal(set) var notificationsURL: String?
+    public internal(set) var labelsURL: String?
+    public internal(set) var releasesURL: String?
+    public internal(set) var deploymentsURL: String?
+    public internal(set) var createdAt: String
+    public internal(set) var updatedAt: String?
+    public internal(set) var pushedAt: String?
+    public internal(set) var gitURL: String?
+    public internal(set) var sshURL: String?
+    public internal(set) var cloneURL: String?
+    public internal(set) var svnURL: String?
+    public internal(set) var homepage: String?
+    public internal(set) var size: Int?
+    public internal(set) var stargazersCount: Int?
+    public internal(set) var watchersCount: Int?
+    public internal(set) var language: String?
+    public internal(set) var hasIssues: Bool?
+    public internal(set) var hasProjects: Bool?
+    public internal(set) var hasDownloads: Bool?
+    public internal(set) var hasWiki: Bool?
+    public internal(set) var hasPages: Bool?
+    public internal(set) var forksCount: Int?
+    public internal(set) var mirrorURL: String?
+    public internal(set) var archived: Bool?
+    public internal(set) var disabled: Bool?
+    public internal(set) var openIssuesCount: Int?
+    public internal(set) var license: String?
+    public internal(set) var forks: Int?
+    public internal(set) var openIssues: Int?
+    public internal(set) var watchers: Int?
+    public internal(set) var defaultBranch: String?
+    public internal(set) var permissions: Permissions?
     
     enum CodingKeys: String, CodingKey {
         case id = "id"

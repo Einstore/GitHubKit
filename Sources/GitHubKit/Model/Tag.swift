@@ -1,10 +1,3 @@
-//
-//  Tag.swift
-//  
-//
-//  Created by Ondrej Rafaj on 23/06/2019.
-//
-
 import Foundation
 
 
@@ -12,10 +5,10 @@ public struct Tag: Codable {
     
     public struct List: Codable {
         
-        public let name: String
-        public let commit: Commit
-        public let zipballUrl: String?
-        public let tarballUrl: String?
+        public internal(set) var name: String
+        public internal(set) var commit: Commit
+        public internal(set) var zipballUrl: String?
+        public internal(set) var tarballUrl: String?
         
         enum CodingKeys: String, CodingKey {
             case name
@@ -28,9 +21,9 @@ public struct Tag: Codable {
     
     public struct Object: Codable {
         
-        public let type: String?
-        public let sha: String?
-        public let url: String?
+        public internal(set) var type: String?
+        public internal(set) var sha: String?
+        public internal(set) var url: String?
         
         enum CodingKeys: String, CodingKey {
             case type = "type"
@@ -40,14 +33,14 @@ public struct Tag: Codable {
         
     }
 
-    public let nodeID: String?
-    public let tag: String?
-    public let sha: String?
-    public let url: String?
-    public let message: String?
-    public let tagger: Author?
-    public let object: Object?
-    public let verification: Verification?
+    public internal(set) var nodeID: String?
+    public internal(set) var tag: String?
+    public internal(set) var sha: String?
+    public internal(set) var url: String?
+    public internal(set) var message: String?
+    public internal(set) var tagger: Author?
+    public internal(set) var object: Object?
+    public internal(set) var verification: Verification?
     
     enum CodingKeys: String, CodingKey {
         case nodeID = "node_id"

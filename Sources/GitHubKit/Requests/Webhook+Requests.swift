@@ -1,10 +1,3 @@
-//
-//  Webhook+Requests.swift
-//  
-//
-//  Created by Ondrej Rafaj on 20/06/2019.
-//
-
 import NIO
 
 

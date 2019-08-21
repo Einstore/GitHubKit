@@ -1,10 +1,3 @@
-//
-//  PR.swift
-//  
-//
-//  Created by Ondrej Rafaj on 16/07/2019.
-//
-
 import Foundation
 
 
@@ -12,23 +5,23 @@ public struct PR: Codable {
     
     public struct Location: Codable {
         
-        public let label: String?
-        public let ref: String?
-        public let sha: String?
-        public let user: Owner?
-        public let repo: Repo?
+        public internal(set) var label: String?
+        public internal(set) var ref: String?
+        public internal(set) var sha: String?
+        public internal(set) var user: Owner?
+        public internal(set) var repo: Repo?
         
     }
     
     public struct Label: Codable {
         
-        public let id: Int?
-        public let nodeID: String?
-        public let url: String?
-        public let name: String?
-        public let labelDescription: String?
-        public let color: String?
-        public let labelDefault: Bool?
+        public internal(set) var id: Int?
+        public internal(set) var nodeID: String?
+        public internal(set) var url: String?
+        public internal(set) var name: String?
+        public internal(set) var labelDescription: String?
+        public internal(set) var color: String?
+        public internal(set) var labelDefault: Bool?
         
         enum CodingKeys: String, CodingKey {
             case id = "id"
@@ -45,16 +38,16 @@ public struct PR: Codable {
     
     public struct RequestedTeam: Codable {
         
-        public let id: Int?
-        public let nodeID: String?
-        public let url: String?
-        public let name: String?
-        public let slug: String?
-        public let requestedTeamDescription: String?
-        public let privacy: String?
-        public let permission: String?
-        public let membersURL: String?
-        public let repositoriesURL: String?
+        public internal(set) var id: Int?
+        public internal(set) var nodeID: String?
+        public internal(set) var url: String?
+        public internal(set) var name: String?
+        public internal(set) var slug: String?
+        public internal(set) var requestedTeamDescription: String?
+        public internal(set) var privacy: String?
+        public internal(set) var permission: String?
+        public internal(set) var membersURL: String?
+        public internal(set) var repositoriesURL: String?
         
         enum CodingKeys: String, CodingKey {
             case id = "id"
@@ -75,18 +68,18 @@ public struct PR: Codable {
         
         public struct Href: Codable {
             
-            public let href: String?
+            public internal(set) var href: String?
             
         }
         
-        public let linksSelf: Href?
-        public let html: Href?
-        public let issue: Href?
-        public let comments: Href?
-        public let reviewComments: Href?
-        public let reviewComment: Href?
-        public let commits: Href?
-        public let statuses: Href?
+        public internal(set) var linksSelf: Href?
+        public internal(set) var html: Href?
+        public internal(set) var issue: Href?
+        public internal(set) var comments: Href?
+        public internal(set) var reviewComments: Href?
+        public internal(set) var reviewComment: Href?
+        public internal(set) var commits: Href?
+        public internal(set) var statuses: Href?
         
         enum CodingKeys: String, CodingKey {
             case linksSelf = "self"
@@ -101,53 +94,53 @@ public struct PR: Codable {
         
     }
     
-    public let url: String
-    public let id: Int
-    public let nodeID: String
-    public let htmlURL: String
-    public let diffURL: String?
-    public let patchURL: String?
-    public let issueURL: String?
-    public let commitsURL: String?
-    public let reviewCommentsURL: String?
-    public let reviewCommentURL: String?
-    public let commentsURL: String?
-    public let statusesURL: String?
-    public let number: Int
-    public let state: String
-    public let locked: Bool?
-    public let title: String
-    public let user: Owner?
-    public let body: String?
-    public let labels: [Label]?
-    public let milestone: Milestone?
-    public let activeLockReason: String?
-    public let createdAt: String
-    public let updatedAt: String?
-    public let closedAt: String?
-    public let mergedAt: String?
-    public let mergeCommitSHA: String?
-    public let assignee: Owner?
-    public let assignees: [Owner]?
-    public let requestedReviewers: [Owner]?
-    public let requestedTeams: [RequestedTeam]?
-    public let head: Location?
-    public let base: Location?
-    public let links: Links?
-    public let authorAssociation: String?
-    public let draft: Bool?
-    public let merged: Bool?
-    public let mergeable: Bool?
-    public let rebaseable: Bool?
-    public let mergeableState: String?
-    public let mergedBy: Owner?
-    public let comments: Int?
-    public let reviewComments: Int?
-    public let maintainerCanModify: Bool?
-    public let commits: Int?
-    public let additions: Int?
-    public let deletions: Int?
-    public let changedFiles: Int?
+    public internal(set) var url: String
+    public internal(set) var id: Int
+    public internal(set) var nodeID: String
+    public internal(set) var htmlURL: String
+    public internal(set) var diffURL: String?
+    public internal(set) var patchURL: String?
+    public internal(set) var issueURL: String?
+    public internal(set) var commitsURL: String?
+    public internal(set) var reviewCommentsURL: String?
+    public internal(set) var reviewCommentURL: String?
+    public internal(set) var commentsURL: String?
+    public internal(set) var statusesURL: String?
+    public internal(set) var number: Int
+    public internal(set) var state: String
+    public internal(set) var locked: Bool?
+    public internal(set) var title: String
+    public internal(set) var user: Owner?
+    public internal(set) var body: String?
+    public internal(set) var labels: [Label]?
+    public internal(set) var milestone: Milestone?
+    public internal(set) var activeLockReason: String?
+    public internal(set) var createdAt: String
+    public internal(set) var updatedAt: String?
+    public internal(set) var closedAt: String?
+    public internal(set) var mergedAt: String?
+    public internal(set) var mergeCommitSHA: String?
+    public internal(set) var assignee: Owner?
+    public internal(set) var assignees: [Owner]?
+    public internal(set) var requestedReviewers: [Owner]?
+    public internal(set) var requestedTeams: [RequestedTeam]?
+    public internal(set) var head: Location?
+    public internal(set) var base: Location?
+    public internal(set) var links: Links?
+    public internal(set) var authorAssociation: String?
+    public internal(set) var draft: Bool?
+    public internal(set) var merged: Bool?
+    public internal(set) var mergeable: Bool?
+    public internal(set) var rebaseable: Bool?
+    public internal(set) var mergeableState: String?
+    public internal(set) var mergedBy: Owner?
+    public internal(set) var comments: Int?
+    public internal(set) var reviewComments: Int?
+    public internal(set) var maintainerCanModify: Bool?
+    public internal(set) var commits: Int?
+    public internal(set) var additions: Int?
+    public internal(set) var deletions: Int?
+    public internal(set) var changedFiles: Int?
     
     enum CodingKeys: String, CodingKey {
         case url = "url"

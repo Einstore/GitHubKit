@@ -1,10 +1,3 @@
-//
-//  Release.swift
-//  
-//
-//  Created by Ondrej Rafaj on 23/06/2019.
-//
-
 import Foundation
 
 
@@ -12,19 +5,19 @@ public struct Release: Codable {
     
     public struct Asset: Codable {
         
-        public let url: String?
-        public let browserDownloadURL: String?
-        public let id: Int
-        public let nodeID: String?
-        public let name: String?
-        public let label: String?
-        public let state: String?
-        public let contentType: String
-        public let size: Int
-        public let downloadCount: Int?
-        public let createdAt: String?
-        public let updatedAt: String?
-        public let uploader: Owner?
+        public internal(set) var url: String?
+        public internal(set) var browserDownloadURL: String?
+        public internal(set) var id: Int
+        public internal(set) var nodeID: String?
+        public internal(set) var name: String?
+        public internal(set) var label: String?
+        public internal(set) var state: String?
+        public internal(set) var contentType: String
+        public internal(set) var size: Int
+        public internal(set) var downloadCount: Int?
+        public internal(set) var createdAt: String?
+        public internal(set) var updatedAt: String?
+        public internal(set) var uploader: Owner?
         
         enum CodingKeys: String, CodingKey {
             case url = "url"
@@ -44,24 +37,24 @@ public struct Release: Codable {
         
     }
     
-    public let url: String?
-    public let htmlURL: String?
-    public let assetsURL: String?
-    public let uploadURL: String?
-    public let tarballURL: String?
-    public let zipballURL: String?
-    public let id: Int
-    public let nodeID: String?
-    public let tagName: String
-    public let targetCommitish: String?
-    public let name: String
-    public let body: String?
-    public let draft: Bool
-    public let prerelease: Bool
-    public let createdAt: String?
-    public let publishedAt: String?
-    public let author: Owner?
-    public let assets: [Asset]?
+    public internal(set) var url: String?
+    public internal(set) var htmlURL: String?
+    public internal(set) var assetsURL: String?
+    public internal(set) var uploadURL: String?
+    public internal(set) var tarballURL: String?
+    public internal(set) var zipballURL: String?
+    public internal(set) var id: Int
+    public internal(set) var nodeID: String?
+    public internal(set) var tagName: String
+    public internal(set) var targetCommitish: String?
+    public internal(set) var name: String
+    public internal(set) var body: String?
+    public internal(set) var draft: Bool
+    public internal(set) var prerelease: Bool
+    public internal(set) var createdAt: String?
+    public internal(set) var publishedAt: String?
+    public internal(set) var author: Owner?
+    public internal(set) var assets: [Asset]?
     
     enum CodingKeys: String, CodingKey {
         case url = "url"

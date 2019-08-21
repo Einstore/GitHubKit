@@ -1,10 +1,3 @@
-//
-//  Webhook.swift
-//  
-//
-//  Created by Ondrej Rafaj on 20/06/2019.
-//
-
 import Foundation
 
 
@@ -12,10 +5,10 @@ public struct Webhook: Codable {
     
     public struct Post: Codable {
         
-        public let name: String
-        public let active: Bool
-        public let events: [EventType]
-        public let config: Config
+        public internal(set) var name: String
+        public internal(set) var active: Bool
+        public internal(set) var events: [EventType]
+        public internal(set) var config: Config
         
         public init(active: Bool = true, events: [EventType] = [.push], config: Config) {
             self.name = "web"
@@ -33,10 +26,10 @@ public struct Webhook: Codable {
             case no = "0"
         }
         
-        public let contentType: String?
-        public let insecureSSL: InsecureSSL?
-        public let url: String
-        public let secret: String?
+        public internal(set) var contentType: String?
+        public internal(set) var insecureSSL: InsecureSSL?
+        public internal(set) var url: String
+        public internal(set) var secret: String?
         
         enum CodingKeys: String, CodingKey {
             case contentType = "content_type"
@@ -56,9 +49,9 @@ public struct Webhook: Codable {
     
     public struct LastResponse: Codable {
         
-        public let code: Int?
-        public let status: String?
-        public let message: String?
+        public internal(set) var code: Int?
+        public internal(set) var status: String?
+        public internal(set) var message: String?
         
     }
     
@@ -133,18 +126,18 @@ public struct Webhook: Codable {
         
     }
     
-    public let type: String?
-    public let id: Int
-    public let name: String
-    public let active: Bool
-    public let events: [EventType]
-    public let config: Config
-    public let updatedAt: String?
-    public let createdAt: String?
-    public let url: String?
-    public let testURL: String?
-    public let pingURL: String?
-    public let lastResponse: LastResponse?
+    public internal(set) var type: String?
+    public internal(set) var id: Int
+    public internal(set) var name: String
+    public internal(set) var active: Bool
+    public internal(set) var events: [EventType]
+    public internal(set) var config: Config
+    public internal(set) var updatedAt: String?
+    public internal(set) var createdAt: String?
+    public internal(set) var url: String?
+    public internal(set) var testURL: String?
+    public internal(set) var pingURL: String?
+    public internal(set) var lastResponse: LastResponse?
     
     enum CodingKeys: String, CodingKey {
         case type = "type"
