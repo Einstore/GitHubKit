@@ -55,4 +55,14 @@ public struct Commit: Codable {
         case committer = "committer"
     }
     
+    init(sha: String, nodeID: String? = nil, commit: Info? = nil, author: Author? = nil, parents: [Tree]? = nil, url: String, committer: Author? = nil) {
+        self.sha = sha
+        self.nodeID = nodeID
+        self.commit = commit
+        self.author = author
+        self.parents = parents
+        self.url = url
+        self.committer = committer
+    }
+    
 }

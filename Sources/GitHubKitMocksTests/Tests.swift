@@ -1,4 +1,5 @@
-@testable import GitHubKitMocks
+import GitHubKitMocks
+@testable import GitHubKit
 import XCTest
 
 
@@ -13,10 +14,15 @@ class Tests: XCTestCase {
     }
     
     func testGet() {
-        let branch = Branch()
-        github.add(response: branch, path: "repos/org/repo/branches", method: .GET)
+        let branch = Branch(
+            name: "test",
+            commit: Commit(sha: "test-sha", url: "test://url")
+        )
+        let res = [branch]
+        github.add(response: res, path: "repos/org/repo/branches", method: .GET)
         let r = try! Branch.query(on: github).get(org: "org", repo: "repo").wait()
-        print(r)
+        
+        XCTAssertEqual(res[0].name, r[0].name)
     }
     
 }

@@ -17,7 +17,7 @@ public class GitHubMock: GitHubClient {
         
         public init(_ method: HTTPMethod = .GET, _ path: String) {
             self.method = method
-            self.path = ""
+            self.path = path
         }
         
         public var mockResponse: MockResponse {
@@ -40,11 +40,15 @@ public class GitHubMock: GitHubClient {
     }
         
     func response<C>(_ method: HTTPMethod, _ path: String) -> C? where C: Decodable {
-        return responses[MockResponse(method, path)] as? C
+        let key = MockResponse(method, path)
+        let ret = responses[key]
+        print(C.self)
+        return ret as? C
     }
     
     func future<C>(response method: HTTPMethod, _ path: String) -> EventLoopFuture<C> where C: Decodable {
-        guard let d: C = response(.GET, path) else {
+        let r: C? = response(.GET, path)
+        guard let d: C = r else {
             return eventLoop.makeFailedFuture(GitHub.Error.notFound(path))
         }
         return eventLoop.makeSucceededFuture(d)
@@ -73,16 +77,33 @@ public class GitHubMock: GitHubClient {
         return eventLoop.makeSucceededFuture(Void())
     }
     
+    public var files: [String: Data] = [:]
+    
     public func get(file path: String) throws -> EventLoopFuture<Data?> {
-        fatalError()
+        guard let file = files[path] else {
+            return eventLoop.makeSucceededFuture(nil)
+        }
+        return eventLoop.makeSucceededFuture(file)
     }
+    
+    public var redirects: [String: String] = [:]
     
     public func redirect(file path: String, status: HTTPResponseStatus = .found) throws -> EventLoopFuture<String> {
-        fatalError()
+        guard let redirect = redirects[path] else {
+            return eventLoop.makeFailedFuture(GitHub.Error.notFound(path))
+        }
+        return eventLoop.makeSucceededFuture(redirect)
     }
     
+    /// Download links
+    ///    - Note: Repo is a key to return a download link
+    public var downloads: [String: String] = [:]
+    
     public func download(org: String, repo: String, ref: String, format: GitHub.Format = .tarball) throws -> EventLoopFuture<String> {
-        fatalError()
+        guard let download = downloads[repo] else {
+            return eventLoop.makeFailedFuture(GitHub.Error.notFound("Download for \(org)/\(repo)/\(ref)"))
+        }
+        return eventLoop.makeSucceededFuture(download)
     }
     
     public func syncShutdown() throws { }
