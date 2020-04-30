@@ -8,7 +8,7 @@ let package = Package(
         .library(name: "GitHubKitMocks", targets: ["GitHubKitMocks"])
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.0.0-alpha.2")
+        .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.1.1")
     ],
     targets: [
         .target(

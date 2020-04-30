@@ -50,7 +50,7 @@ public class GitHub: GitHubClient {
     let client: AsyncHTTPClient.HTTPClient
     
     /// Initializer
-    public init(_ config: Config, eventLoopGroupProvider provider: AsyncHTTPClient.HTTPClient.EventLoopGroupProvider = .createNew, proxy: AsyncHTTPClient.HTTPClient.Proxy? = nil) throws {
+    public init(_ config: Config, eventLoopGroupProvider provider: AsyncHTTPClient.HTTPClient.EventLoopGroupProvider = .createNew, proxy: AsyncHTTPClient.HTTPClient.Configuration.Proxy? = nil) throws {
         self.config = config
         var conf = AsyncHTTPClient.HTTPClient.Configuration()
         conf.proxy = proxy
