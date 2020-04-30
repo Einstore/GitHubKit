@@ -85,13 +85,14 @@ public struct Repo: Codable {
     public internal(set) var archived: Bool?
     public internal(set) var disabled: Bool?
     public internal(set) var openIssuesCount: Int?
-    public internal(set) var license: String?
+    public internal(set) var license: License?
     public internal(set) var forks: Int?
     public internal(set) var openIssues: Int?
     public internal(set) var watchers: Int?
     public internal(set) var defaultBranch: String?
     public internal(set) var permissions: Permissions?
-    
+    public internal(set) var topics: [String]?
+
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case nodeID = "node_id"
@@ -167,6 +168,7 @@ public struct Repo: Codable {
         case watchers = "watchers"
         case defaultBranch = "default_branch"
         case permissions = "permissions"
+        case topics = "topics"
     }
     
 }
