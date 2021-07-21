@@ -156,6 +156,11 @@ extension GitHub {
             return self.eventLoop.makeSucceededFuture(Void())
         }
     }
+
+    /// Delete a file
+    public func delete<C, E>(path: String, post: E) throws -> EventLoopFuture<C?> where C: Decodable, E: Encodable {
+        return try send(method: .DELETE, path: path, post: post)
+    }
     
     /// Retrieve a file
     public func get(file path: String) throws -> EventLoopFuture<Data?> {
